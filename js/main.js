@@ -2,9 +2,7 @@ const baseUrl = 'https://geo.api.gouv.fr';
 const selecRegion = document.querySelector(`#regions`);
 const selecDepartement = document.querySelector(`#departements`);
 
-fetch(`${baseUrl}/regions`)
-    .then(response => response.json())
-    .then(regions => {
+fetch(`${baseUrl}/regions`).then(response => response.json()).then(regions => {
         regions.forEach(region => {
             const option = document.createElement('option');
             option.value = region.code;
@@ -12,13 +10,10 @@ fetch(`${baseUrl}/regions`)
             selecRegion.appendChild(option);
         });
     })
-    .catch(error => console.error('Erreur lors de la récupération des régions:', error));
 
 selecRegion.addEventListener('change', (e) => {
     const codeRegion = e.target.value;
-    fetch(`${baseUrl}/regions/${codeRegion}/departements`)
-        .then(response => response.json())
-        .then(departements => {
+    fetch(`${baseUrl}/regions/${codeRegion}/departements`).then(response => response.json()).then(departements => {
             selecDepartement.innerHTML = '<option value="">Choisissez un département</option>';
             
             departements.forEach(departement => {
@@ -40,9 +35,7 @@ boutonAfficher.addEventListener('click', () => {
         return;
     }
 
-    fetch(`${baseUrl}/departements/${codeDepartement}/communes`)
-        .then(response => response.json())
-        .then(communes => {
+    fetch(`${baseUrl}/departements/${codeDepartement}/communes`).then(response => response.json()).then(communes => {
             communes.sort((a, b) => b.population - a.population);
 
             const communeList = document.createElement('ul');
